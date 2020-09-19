@@ -50,12 +50,7 @@ resource "aws_apigatewayv2_api" "api_gateway" {
   name        = "ServerlessExample"
   description = "Terraform Serverless Application Example"
   protocol_type = "HTTP"
-}
-
-
-resource "aws_apigatewayv2_route" "example" {
-  api_id    = aws_apigatewayv2_api.api_gateway.id
-  route_key = "$default"
+  target        = aws_lambda_function.lambda_app.arn
 }
 
 
@@ -66,12 +61,4 @@ resource "aws_lambda_permission" "apigw" {
   principal     = "apigateway.amazonaws.com"
 
   source_arn = "${aws_apigatewayv2_api.api_gateway.execution_arn}/*/*"
-}
-resource "aws_apigatewayv2_deployment" "example" {
-  api_id      = aws_apigatewayv2_route.example.api_id
-  description = "Example deployment"
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
