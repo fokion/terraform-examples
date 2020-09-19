@@ -18,7 +18,7 @@ resource "aws_lambda_function" "lambda_app" {
   handler = "server.handler"
   runtime = "nodejs12.x"
   environment {
-    variables = merge(var.env_vars,{APP_SECRET=uuid()})
+    variables = merge(var.env_vars,{APP_SECRET=uuid(),LAMBDA_TASK_ROOT = ""})
   }
   role = aws_iam_role.lambda_exec.arn
 }
