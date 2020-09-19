@@ -7,9 +7,7 @@ terraform {
 }
 
 
-variable "env_vars" {
-   type = map(any)
-}
+
 resource "aws_lambda_function" "example" {
   function_name = "ServerlessExample"
 
