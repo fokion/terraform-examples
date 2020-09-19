@@ -14,8 +14,8 @@ resource "aws_lambda_function" "example" {
 
   # The bucket name as created earlier with "aws s3api create-bucket"
   s3_bucket = "fokion-lambda-tests"
-
-  handler = "server.js"
+  s3_key = "server.zip"
+  handler = "server.handler"
   runtime = "nodejs12.x"
   environment {
     variables = merge(var.env_vars,{APP_SECRET=uuid()})
