@@ -10,16 +10,17 @@ terraform {
 
 
 resource "aws_lambda_function" "lambda_app" {
-  function_name = "ServerlessExample"
-
-  # The bucket name as created earlier with "aws s3api create-bucket"
-  s3_bucket = "fokion-lambda-tests"
-  s3_key = "server.zip"
-  handler = "server.handler"
+  function_name = var.lambda_function_name
+  s3_bucket = var.lambda_s3_bucket
+  s3_key = var.lambda_s3_key
+  handler = var.lambda_handler
+  timeout = 30
+  description = "${var.lambda_function_name} λ"
   runtime = "nodejs12.x"
   environment {
     variables = merge(var.env_vars,{APP_SECRET=uuid()})
   }
+  tags = var.tags
   role = aws_iam_role.lambda_exec.arn
 }
 
@@ -44,10 +45,12 @@ resource "aws_iam_role" "lambda_exec" {
   )
 
 }
-
+resource "random_id" "server" {
+  byte_length = 8
+}
 
 resource "aws_apigatewayv2_api" "api_gateway" {
-  name        = "ServerlessExample"
+  name        = "ServerlessExample-${random_id.server.hex}"
   description = "Terraform Serverless Application Example"
   protocol_type = "HTTP"
   target        = aws_lambda_function.lambda_app.arn
