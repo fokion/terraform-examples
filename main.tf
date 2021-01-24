@@ -37,4 +37,5 @@ resource "aws_route53_record" "nas" {
   records = [
     var.homeip
   ]
+  zone_id = aws_route53_zone.main.zone_id
 }
