@@ -37,7 +37,7 @@ resource "aws_route53_record" "www" {
   ]
   zone_id = aws_route53_zone.main.zone_id
 }
-resource "aws_route53_record" "www" {
+resource "aws_route53_record" "default" {
   name = "fokion.xyz"
   type = "A"
   ttl = 3600
