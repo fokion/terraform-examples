@@ -28,6 +28,24 @@ resource "aws_route53_zone" "main" {
   name = "fokion.xyz"
 }
 
+resource "aws_route53_record" "www" {
+  name = "www.fokion.xyz"
+  type = "A"
+  ttl = 3600
+  records = [
+    var.homeip
+  ]
+  zone_id = aws_route53_zone.main.zone_id
+}
+resource "aws_route53_record" "www" {
+  name = "fokion.xyz"
+  type = "A"
+  ttl = 3600
+  records = [
+    var.homeip
+  ]
+  zone_id = aws_route53_zone.main.zone_id
+}
 
 
 resource "aws_route53_record" "nas" {
