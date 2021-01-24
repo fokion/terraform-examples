@@ -27,3 +27,14 @@ provider "aws" {
 resource "aws_route53_zone" "main" {
   name = "fokion.xyz"
 }
+
+
+
+resource "aws_route53_record" "nas" {
+  name = "nas.fokion.xyz"
+  type = "A"
+  ttl = 3600
+  records = [
+    var.homeip
+  ]
+}

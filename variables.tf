@@ -6,3 +6,7 @@ variable "env_vars" {
   type = map(any)
   default = {}
 }
+
+variable "homeip" {
+  default = ""
+}
